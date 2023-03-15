@@ -5,8 +5,8 @@
 #include <QTcpSocket>
 
 #include <QtNetwork>
-#include <QByteArray>
-#include <QDebug>
+#include <QByteArray> //чтобы по битово передавать
+#include <QDebug> //чтобы выводить в консоль сообщения
 
 class MyTcpServer : public QObject
 {
@@ -21,15 +21,9 @@ public slots:
     void slotServerRead();
     //void slotReadClient();
 private:
-    QTcpServer * mTcpServer;
-    QTcpSocket * mTcpSocket;
+    QTcpServer * mTcpServer; //сам сервер
+    QTcpSocket * mTcpSocket; //QTcpSocket отвечает за подключение(клиентов)
     int server_status;
 };
 #endif // MYTCPSERVER_H
-
-
-
-
-
-
 

@@ -1,6 +1,7 @@
 #include "mytcpserver.h"
 #include <QDebug>
 #include <QCoreApplication>
+#include <QString>
 
 MyTcpServer::~MyTcpServer()
 {
@@ -33,9 +34,20 @@ void MyTcpServer::slotNewConnection(){
 }
 
 void MyTcpServer::slotServerRead(){
+    QByteArray array;
+    QString mystr = "";
     while(mTcpSocket->bytesAvailable()>0)
     {
-        QByteArray array =mTcpSocket->readAll();
+        array =mTcpSocket->readAll();
+        mystr += array;
+    }
+    array.clear();
+    array.append(mystr.toStdString());
+    if (array.trimmed() == "stop") {
+        mTcpSocket->write("Goodbye!");
+        slotClientDisconnected();
+    }
+    else {
         mTcpSocket->write(array);
     }
 }
