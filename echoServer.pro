@@ -13,6 +13,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        funcForServer.cpp \
         main.cpp \
         mytcpserver.cpp
 
@@ -22,4 +23,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    funcForServer.h \
     mytcpserver.h

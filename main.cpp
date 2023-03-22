@@ -2,7 +2,6 @@
 #include "mytcpserver.h"
 
 
-
 int main(int argc, char *argv[])
 //argc - количество параметров, argv - значение параметров
 {

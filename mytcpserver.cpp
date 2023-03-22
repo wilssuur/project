@@ -1,4 +1,5 @@
 #include "mytcpserver.h"
+#include "funcForServer.h"
 #include <QDebug>
 #include <QCoreApplication>
 #include <QString>
@@ -25,7 +26,7 @@ MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent){
 void MyTcpServer::slotNewConnection(){
     if(server_status==1){
         mTcpSocket = mTcpServer->nextPendingConnection();
-        mTcpSocket->write("Hello, World!!! I am echo server!\r\n");
+        mTcpSocket->write("Hello, World!!! I am server!\r\n");
         connect(mTcpSocket, &QTcpSocket::readyRead,
                 this,&MyTcpServer::slotServerRead);
         connect(mTcpSocket,&QTcpSocket::disconnected,
@@ -35,20 +36,18 @@ void MyTcpServer::slotNewConnection(){
 
 void MyTcpServer::slotServerRead(){
     QByteArray array;
-    QString mystr = "";
+    std::string mystr;
     while(mTcpSocket->bytesAvailable()>0)
     {
-        array =mTcpSocket->readAll();
-        mystr += array;
+        array = mTcpSocket->readAll();
+        mystr = array.trimmed().toStdString();
     }
-    array.clear();
-    array.append(mystr.toStdString());
-    if (array.trimmed() == "stop") {
+    if (mystr == "stop") {
         mTcpSocket->write("Goodbye!");
         slotClientDisconnected();
     }
     else {
-        mTcpSocket->write(array);
+        mTcpSocket->write(parsing(array));
     }
 }
 
