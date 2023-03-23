@@ -7,6 +7,7 @@
 #include <QtNetwork>
 #include <QByteArray> //чтобы по битово передавать
 #include <QDebug> //чтобы выводить в консоль сообщения
+#include <QMap>
 
 class MyTcpServer : public QObject
 {
@@ -14,6 +15,7 @@ class MyTcpServer : public QObject
 public:
     explicit MyTcpServer(QObject *parent = nullptr);
     ~MyTcpServer();
+
 public slots:
     void slotNewConnection();
     void slotClientDisconnected();
@@ -21,8 +23,9 @@ public slots:
     void slotServerRead();
     //void slotReadClient();
 private:
-    QTcpServer * mTcpServer; //сам сервер
-    QTcpSocket * mTcpSocket; //QTcpSocket отвечает за подключение(клиентов)
+    QTcpServer * mTcpServer;
+    //QTcpSocket * mTcpSocket; //QTcpSocket отвечает за подключение(клиентов)
+    QMap<int, QTcpSocket*> mTcpSocket;
     int server_status;
 };
 #endif // MYTCPSERVER_H

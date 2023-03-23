@@ -7,6 +7,10 @@
 MyTcpServer::~MyTcpServer()
 {
     //mTcpSocket->close();
+    foreach (int key, mTcpSocket.keys())
+    {
+        mTcpSocket.value(key)->close();
+    }
     mTcpServer->close();
     server_status=0;
 }
@@ -25,32 +29,37 @@ MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent){
 
 void MyTcpServer::slotNewConnection(){
     if(server_status==1){
-        mTcpSocket = mTcpServer->nextPendingConnection();
-        mTcpSocket->write("Hello, World!!! I am server!\r\n");
-        connect(mTcpSocket, &QTcpSocket::readyRead,
+        QTcpSocket *curr_mTcpSocket;
+        curr_mTcpSocket = mTcpServer->nextPendingConnection();
+        mTcpSocket[curr_mTcpSocket->socketDescriptor()] = curr_mTcpSocket;
+        curr_mTcpSocket->write("Hello, World!!! I am server!\r\n");
+        connect(curr_mTcpSocket, &QTcpSocket::readyRead,
                 this,&MyTcpServer::slotServerRead);
-        connect(mTcpSocket,&QTcpSocket::disconnected,
+        connect(curr_mTcpSocket,&QTcpSocket::disconnected,
                 this,&MyTcpServer::slotClientDisconnected);
+        qDebug() << "client connected" << curr_mTcpSocket->socketDescriptor();
     }
 }
 
 void MyTcpServer::slotServerRead(){
+    QTcpSocket *curr_mTcpSocket = (QTcpSocket*)sender();
     QByteArray array;
     std::string mystr;
-    while(mTcpSocket->bytesAvailable()>0)
+    while(curr_mTcpSocket->bytesAvailable()>0)
     {
-        array = mTcpSocket->readAll();
+        array = curr_mTcpSocket->readAll();
         mystr = array.trimmed().toStdString();
     }
     if (mystr == "stop") {
-        mTcpSocket->write("Goodbye!");
+        curr_mTcpSocket->write("Goodbye!");
         slotClientDisconnected();
     }
     else {
-        mTcpSocket->write(parsing(array));
+        curr_mTcpSocket->write(parsing(array));
     }
 }
-
 void MyTcpServer::slotClientDisconnected(){
-    mTcpSocket->close();
+    //QTcpSocket *curr_mTcpSocket = mTcpSocket[mTcpServer->socketDescriptor()];
+    QTcpSocket *curr_mTcpSocket = (QTcpSocket*)sender();
+    curr_mTcpSocket->close();
 }
