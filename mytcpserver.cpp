@@ -7,9 +7,10 @@
 MyTcpServer::~MyTcpServer()
 {
     //mTcpSocket->close();
-    foreach (int key, mTcpSocket.keys())
+    foreach (int key, SocketClients.keys())
     {
-        mTcpSocket.value(key)->close();
+        SocketClients.value(key)->close();
+        SocketClients.remove(key);
     }
     mTcpServer->close();
     server_status=0;
@@ -31,7 +32,7 @@ void MyTcpServer::slotNewConnection(){
     if(server_status==1){
         QTcpSocket *curr_mTcpSocket;
         curr_mTcpSocket = mTcpServer->nextPendingConnection();
-        mTcpSocket[curr_mTcpSocket->socketDescriptor()] = curr_mTcpSocket;
+        SocketClients[curr_mTcpSocket->socketDescriptor()] = curr_mTcpSocket;
         curr_mTcpSocket->write("Hello, World!!! I am server!\r\n");
         connect(curr_mTcpSocket, &QTcpSocket::readyRead,
                 this,&MyTcpServer::slotServerRead);
@@ -62,4 +63,6 @@ void MyTcpServer::slotClientDisconnected(){
     //QTcpSocket *curr_mTcpSocket = mTcpSocket[mTcpServer->socketDescriptor()];
     QTcpSocket *curr_mTcpSocket = (QTcpSocket*)sender();
     curr_mTcpSocket->close();
+    SocketClients.remove(curr_mTcpSocket->socketDescriptor());
+
 }
