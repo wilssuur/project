@@ -2,6 +2,7 @@ QT -= gui #отключаем графический интерфейс(серв
 QT = core
 
 QT += network #для работы с сетью
+QT += sql
 
 CONFIG += c++17 cmdline #консольное приложение, версия с++
 CONFIG -= app_bundle
@@ -13,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        DataBase.cpp \
         funcForServer.cpp \
         main.cpp \
         mytcpserver.cpp
@@ -23,5 +25,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    DateBase.h \
     funcForServer.h \
     mytcpserver.h
