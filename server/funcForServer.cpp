@@ -86,71 +86,67 @@ QByteArray auth(std::string login, std::string pass)
 QByteArray reg(std::string sname, std::string name, std::string lname, std::string log, std::string pas, std::string email, std::string group)
 {
     //return QString::fromStdString((std::string)"FIO: "+ (sname) + " " + (name) + " " + (lname) + (std::string)", Login: " + (log) + (std::string)", Password: " + (pas)).toUtf8();
-    QString note_id = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT note_id+1 FROM users ORDER BY note_id DESC LIMIT 1 \""));
-    QString user_id = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT user_id+1 FROM users ORDER BY user_id DESC LIMIT 1 \""));
-    SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("INSERT INTO users VALUES ( \""
-                                                                       + note_id.toStdString() + ", \"" +user_id.toStdString()+ ", \"" +log+
-                                                                      ", \""+ pas +", \""+ email + ", \"" +
-                                                                       sname + ", \""+ name + ", \"" + lname + ", \""
-                                                                       + group + ", \"" + "0\"" + ", \"" +
-                                                                       ", \"" + "0\""+ ")\""));
-    qDebug()<<"Registration completed";
-    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users \""));
-    qDebug()<<res;
+    std::string note_id = (SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT note_id+1 FROM users ORDER BY note_id DESC LIMIT 1;"))).toStdString();
+    note_id = note_id.substr(1,note_id.length()-2);
+    SingletonDataBase::getInstance()->queryToDB(QString::fromStdString(
+        "INSERT INTO "
+        "users(note_id,user_socket,user_login,user_password,user_email,user_surname,user_name,user_patronymic,user_group,task_1,task_2,task_3)"
+        "VALUES"
+        "("+note_id+",0,'"+log+"','"+pas+"','"+email+"','"+sname+"','"+name+"','"+lname+"','"+group+"',0,0,0);"
+                                                                       ));
+
+    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users where user_login = '"+log+"';"));
+     qDebug()<<"Registration completed"<<res;
     return QString::fromStdString((std::string)"reg+"+(log) + (std::string)"\r\n").toUtf8();
 
 
 }
 
-
-QByteArray showstat(std::string login)
+QByteArray showstat()
 {
     //return QString::fromStdString((std::string)"Statistics: for " + user + "\r\n").toUtf8();
-    QString resfio = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT surname, name, patronymic FROM users where login = \"" + login + "\""));
-    QString restask1 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_id, task_result FROM users where task_id = 1 and login = \"" + login + "\""));
-    QString restask2 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_id, task_result FROM users where task_id = 2 and login = \"" + login + "\""));
-    QString restask3 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_id, task_result FROM users where task_id = 3 and login = \"" + login + "\""));
+    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users"));
     if (res!="")
-        return (QString("stat " +resfio + " " + restask1+ " " + restask2 + " " + restask3 + " \r\n")).toUtf8();
+        return (QString("show " +res+" \r\n")).toUtf8();
     else
-        return "stat-\r\n";
+        return "-\r\n";
 }
 
-QByteArray task1(QString var)
+QByteArray task1()
 {
+    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
+    //QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users"));
     QString res = "Задача 1. \r\n Построить цикл.";
     return (QString("task1 " + res +" \r\n")).toUtf8();
 
 }
 
-QByteArray task2(QString var)
+QByteArray task2()
 {
+    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
     QString res = "Задача 1. \r\n Поиск маршрута.";
     return (QString("task2 " + res +" \r\n")).toUtf8();
 }
 
 
-QByteArray task3(QString var)
+QByteArray task3()
 {
-    QString resserver = "Задача 1. \r\n Построить цикл.";
-    //return (QString("task3 " + res +" \r\n")).toUtf8();
-    return check("3", resserver, resclient);
+    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
+    QString res = "Задача 1. \r\n Построить цикл.";
+    return (QString("task3 " + res +" \r\n")).toUtf8();
 }
 
 
-QByteArray check(std::string tasknum, std::string resserver, std::string resclient)
+QByteArray check(std::string task, std::string variant, std::string answer)
 {
     //check task# random_varian answer_from_user
     //if correct update stat in database +1, else -1
     //check+1 / check+0
     //return QString::fromStdString((std::string)"Tasks to svole" + "\r\n").toUtf8();
 
-    //QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_result FROM users"));
-    if (resserver == resclient)
-    {
-    SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users set task_result = task_result+1 where task_id = \"" + tasknum + "\""));
-    return "check+1\r\n";
-    }
+    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_result FROM users"));
+    if (res!="")
+        return "check+1\r\n";
     else
         return "check-1\r\n";
 }

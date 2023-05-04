@@ -8,11 +8,11 @@ QByteArray parsing(QByteArray str);
 
 QByteArray auth(std::string login,std::string pass);
 QByteArray reg(std::string sname, std::string name, std::string lname, std::string log, std::string pas, std::string email, std::string group);
-QByteArray showstat(std::string login);
-QByteArray task1(QString var);
-QByteArray task2(QString var);
-QByteArray task3(QString var);
-QByteArray check(std::string tasknum, std::string resserver, std::string resclient);
+QByteArray showstat();
+QByteArray task1();
+QByteArray task2();
+QByteArray task3();
+QByteArray check(std::string task, std::string variant, std::string answer);
 QByteArray exit();
 
 

@@ -30,7 +30,7 @@ private:
 protected:
     SingletonDataBase(){
         qDebug()<<"SingletonDataBase()\n";
-        db.setDatabaseName("D:/MathLog/ClientSingleton/project/sqliteuser.db");
+        db.setDatabaseName("D:/matlogic/draft/project/server/sqliteuser.db");
         //db.setDatabaseName("sqliteuser.db");
 
         if(!db.open())
@@ -75,20 +75,12 @@ public:
         const int taskres = rec.indexOf("task_result");
 
         QString res = "";
+        int numofcols = rec.count();
         while(query.next())
         {
-            res.append(query.value(noteid).toString());
-            res.append("\t").append(query.value(userid).toString());
-            res.append("\t").append(query.value(userid).toString());
-            res.append("\t").append(query.value(login).toString());
-            res.append("\t").append(query.value(password).toString());
-            res.append("\t").append(query.value(email).toString());
-            res.append("\t").append(query.value(surname).toString());
-            res.append("\t").append(query.value(name).toString());
-            res.append("\t").append(query.value(patronymic).toString());
-            res.append("\t").append(query.value(group).toString());
-            res.append("\t").append(query.value(taskid).toString());
-            res.append("\t").append(query.value(taskres).toString());
+            for(int i=0;i<numofcols;i++)
+                res.append("\t").append(query.value(i).toString());
+
             res.append("\n");
         }
         //qDebug()<<res;

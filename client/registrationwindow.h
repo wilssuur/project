@@ -24,12 +24,13 @@ private slots:
 
     void on_backButton_clicked();
 
+    void on_message_from_server_reg(QString msg);
 private:
     Ui::RegistrationWindow *ui;
 signals:
     void is_hide();
     void is_reg(QString);
-    void on_message_from_server_reg(QString msg);
+
 };
 
 #endif // REGISTRATIONWINDOW_H

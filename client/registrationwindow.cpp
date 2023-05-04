@@ -9,9 +9,9 @@ RegistrationWindow::RegistrationWindow(QWidget *parent) :
     ui(new Ui::RegistrationWindow)
 {
     ui->setupUi(this);
-    taskwindow = new task;
+    //taskwindow = new task;
     //connect(taskwindow, &task::is_hide, this, &MainWindow::show);
-    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server, RegistrationWindow, &RegistrationWindow::on_message_from_server_reg);
+    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server, this, &RegistrationWindow::on_message_from_server_reg);
 }
 
 RegistrationWindow::~RegistrationWindow()
@@ -34,16 +34,15 @@ void RegistrationWindow::on_pushButtoncheckregistration_clicked()
             QMessageBox::warning(this,"Несовпадение","Пароли должны совпадать!");
         }
         else{
-            //QMessageBox::information(this,"OK","Вы зарегистрировались!");
+           // QMessageBox::information(this,"OK","Вы зарегистрировались!");
             SingletonClient::getInstance()->send_msg_to_server("Reg "+surname+" "+name + " " + patronymic + " "+
-                                                              loginr+ " " +password1+ " "+ email + " " + group );
+                                                             loginr+ " " +password1+ " "+ email + " " + group );
 
-            //hide();
         }
     }
     else{
         QMessageBox::warning(this,"Не все данные","Сначала заполните все поля!");
-        emit is_reg("Auth "+loginr+" "+password1);
+        //emit is_reg("Auth "+loginr+" "+password1);
     }
 }
 
@@ -57,17 +56,14 @@ void RegistrationWindow::on_backButton_clicked()
 void RegistrationWindow::on_message_from_server_reg(QString msg)
 {
     if (msg.left(4) == "reg+"){
-        QMessageBox::information(this,"OK","Вы зарегистрировались!");
-        /*
-        ui->lineEditlogin->setText("");
-        ui->lineEditpassword->setText("");
-        */
-        this->hide();
-        taskwindow->set_login(msg.mid(5));
-        taskwindow->show();
+        QString login = ui->lineEditloginr->text();
+        QString password = ui->lineEditpasswordr1->text();
+        SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+        //QMessageBox::information(this,"OK","Вы зарегистрировались!");
+        this->on_backButton_clicked();
     }
     else {
-        QMessageBox::warning(this, "Неуспешно", "Ошибка");
+        //QMessageBox::warning(this, "Неуспешно", "Ошибка");
 
     }
 

@@ -21,7 +21,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_registrationButton_clicked()
 {
-    this->close();
+    this->hide();
     registrationwindow  = new RegistrationWindow;
     registrationwindow->show();
     //connect(registrationwindow, &RegistrationWindow::is_hide, this, &MainWindow::show);

@@ -2,7 +2,7 @@
 
 SingletonClient::SingletonClient(QObject *parent) : QObject(parent){
     mTcpSocket = new QTcpSocket(this);
-    mTcpSocket -> connectToHost("127.0.0.1",33333);
+    mTcpSocket -> connectToHost("127.0.0.1", 33333);
     connect(mTcpSocket, &QTcpSocket::readyRead,
             this, &SingletonClient::slotServerRead);
 
