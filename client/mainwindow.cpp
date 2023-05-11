@@ -9,8 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     taskwindow = new task;
     connect(taskwindow, &task::is_hide, this, &MainWindow::show);
-    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server, this, &MainWindow::on_message_from_server);
-            //taskwindow, &task::slot_show);
+    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server_auth, this, &MainWindow::on_message_from_server);
+    registrationwindow  = new RegistrationWindow;
+
+    connect(registrationwindow, &RegistrationWindow::is_hide, this, &MainWindow::show);
+   //taskwindow, &task::slot_show);
 }
 
 MainWindow::~MainWindow()
@@ -21,10 +24,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_registrationButton_clicked()
 {
-    this->hide();
-    registrationwindow  = new RegistrationWindow;
+    this->close();
+   // registrationwindow  = new RegistrationWindow;
     registrationwindow->show();
-    //connect(registrationwindow, &RegistrationWindow::is_hide, this, &MainWindow::show);
+   // connect(registrationwindow, &RegistrationWindow::is_hide, this, &MainWindow::show);
     //connect(registrationwindow, &RegistrationWindow::is_reg, this, &MainWindow::slot_auth);
 }
 

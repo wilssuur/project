@@ -36,7 +36,8 @@ public:
     static SingletonClient* getInstance();
     void send_msg_to_server(QString query);
 signals:
-    void msg_from_server(QString msg);
+    void msg_from_server_auth(QString msg);
+    void msg_from_server_reg(QString msg);
 private slots:
     void slotServerRead();
 

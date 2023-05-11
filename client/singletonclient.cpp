@@ -2,7 +2,7 @@
 
 SingletonClient::SingletonClient(QObject *parent) : QObject(parent){
     mTcpSocket = new QTcpSocket(this);
-    mTcpSocket -> connectToHost("127.0.0.1", 33333);
+    mTcpSocket -> connectToHost("172.20.10.2", 33333);
     connect(mTcpSocket, &QTcpSocket::readyRead,
             this, &SingletonClient::slotServerRead);
 
@@ -17,8 +17,10 @@ SingletonClient* SingletonClient::getInstance(){
 }
 
 void SingletonClient::send_msg_to_server(QString query){
+    query.append("\r\n");
     qDebug()<<"Send "<< query;
     mTcpSocket->write(query.toUtf8());
+    slotServerRead();
 }
 
 void SingletonClient::slotServerRead(){
@@ -30,7 +32,10 @@ void SingletonClient::slotServerRead(){
     }
     qDebug()<<"Recieve: "<<msg;
 
-    emit msg_from_server(msg);
+    if(msg.left(3) == "reg")
+        emit msg_from_server_reg(msg);
+    if(msg.left(4) == "auth")
+        emit msg_from_server_auth(msg);
 }
 
 SingletonClient::~SingletonClient(){

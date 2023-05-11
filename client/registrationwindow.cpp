@@ -11,7 +11,7 @@ RegistrationWindow::RegistrationWindow(QWidget *parent) :
     ui->setupUi(this);
     //taskwindow = new task;
     //connect(taskwindow, &task::is_hide, this, &MainWindow::show);
-    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server, this, &RegistrationWindow::on_message_from_server_reg);
+    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server_reg, this, &RegistrationWindow::on_message_from_server_reg);
 }
 
 RegistrationWindow::~RegistrationWindow()
@@ -37,6 +37,7 @@ void RegistrationWindow::on_pushButtoncheckregistration_clicked()
            // QMessageBox::information(this,"OK","Вы зарегистрировались!");
             SingletonClient::getInstance()->send_msg_to_server("Reg "+surname+" "+name + " " + patronymic + " "+
                                                              loginr+ " " +password1+ " "+ email + " " + group );
+            hide();
 
         }
     }
@@ -55,12 +56,14 @@ void RegistrationWindow::on_backButton_clicked()
 
 void RegistrationWindow::on_message_from_server_reg(QString msg)
 {
-    if (msg.left(4) == "reg+"){
-        QString login = ui->lineEditloginr->text();
-        QString password = ui->lineEditpasswordr1->text();
-        SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
-        //QMessageBox::information(this,"OK","Вы зарегистрировались!");
-        this->on_backButton_clicked();
+    if (msg.left(4) == "reg-"){
+        QMessageBox::information(this,"OK","error login");
+        show();
+        //QString login = ui->lineEditloginr->text();
+        //QString password = ui->lineEditpasswordr1->text();
+        //emit is_reg("Auth "+login+" "+password);
+        //SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+        //this->on_backButton_clicked();
     }
     else {
         //QMessageBox::warning(this, "Неуспешно", "Ошибка");
