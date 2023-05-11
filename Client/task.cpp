@@ -1,17 +1,13 @@
 #include "task.h"
 #include "ui_task.h"
-#include <mainwindow.h>
-#include <QMessageBox>
-#include <QWidget>
-#include <QLineEdit>
-#include <statistics.h>
-#include <QPushButton>
 
 task::task(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::task)
 {
     ui->setupUi(this);
+    //ui->checkansButton->hide();
+    //ui->answerEdit->hide();
 }
 
 task::~task()
@@ -29,47 +25,29 @@ void task::on_leavaccountButton_clicked()
 
 void task::on_VariantButton_clicked()
 {
+    int tasknumber =0;
     if (ui->radioButton->isChecked())
     {
-        QLineEdit *ans = new QLineEdit(this);
-        ans->setGeometry(365,270,250,30);
-        ans->show();
-        ui->labeltask->setText("Условие задачи 1");
-        ui->labelanswer->setText("Ответ:");
-        QPushButton *checkans = new QPushButton(this);
-        checkans->setGeometry(365,310,110,40);
-        checkans->setText("Проверить ответ");
-        checkans->show();
-
+        tasknumber = 1;
     }
     else if (ui->radioButton_2->isChecked()){
-        QLineEdit *ans = new QLineEdit(this);
-        ans->setGeometry(365,270,250,30);
-        ans->show();
-        ui->labeltask->setText("Условие задачи 2");
-        ui->labelanswer->setText("Ответ:");
-        QPushButton *checkans = new QPushButton(this);
-        checkans->setGeometry(365,310,110,40);
-        checkans->setText("Проверить ответ");
-        checkans->show();
-
+        tasknumber=2;
     }
     else if (ui->radioButton_3->isChecked()){
-        QLineEdit *ans = new QLineEdit(this);
-        ans->setGeometry(365,270,250,30);
-        ans->show();
-        ui->labeltask->setText("Условие задачи 3");
-        ui->labelanswer->setText("Ответ:");
-        QPushButton *checkans = new QPushButton(this);
-        checkans->setGeometry(365,310,110,40);
-        checkans->setText("Проверить ответ");
-        checkans->show();
-
+        tasknumber=3;
     }
     else{
         QMessageBox::warning(this,"Ошибка", "Выберите номер задачи!");
+        return;
     }
+    ui->answerEdit->show();
+    QString variant = get_variant(tasknumber);
+    //ui->labeltask->setText("Условие задачи "+get_task(tasknumber));
+    ui->labelvariant->setText(variant);
+    ui->labelanswer->setText("Ответ:");
+    ui->checkansButton->show();
 }
+
 
 
 void task::on_statisticsButton_clicked()
@@ -79,7 +57,36 @@ void task::on_statisticsButton_clicked()
     stat.exec();
 }
 
-void task::slot_show(QString log){
+void task::set_login(QString log){
     login = log;
-    show();
 }
+
+void task::on_checkansButton_clicked()
+{
+    if (ui->answerEdit->text() != ""){
+        ui->labelresult->setText("Проверяем))");
+    }
+    else {
+        QMessageBox::warning(this,"Ошибка", "Сначала введите ответ");
+
+    }
+}
+
+
+void task::on_againButton_clicked()
+{
+    ui->answerEdit->setText("");
+    ui->labeltask->setText("");
+    ui->labelresult->setText("");
+    if (ui->radioButton->isChecked()){
+        ui->radioButton->setChecked(false);
+    }
+    else if (ui->radioButton_2->isChecked()){
+        ui->radioButton_2->setChecked(false);
+    }
+    else {
+        ui->radioButton_3->setChecked(false);
+    }
+
+}
+

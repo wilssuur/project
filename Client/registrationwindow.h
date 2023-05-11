@@ -2,6 +2,10 @@
 #define REGISTRATIONWINDOW_H
 
 #include <QDialog>
+#include <QMessageBox>
+#include <QString>
+//#include "task.h"
+//#include "mainwindow.h"
 
 namespace Ui {
 class RegistrationWindow;
@@ -20,10 +24,12 @@ private slots:
 
     void on_backButton_clicked();
 
+    void on_message_from_server_reg(QString msg);
 private:
     Ui::RegistrationWindow *ui;
 signals:
     void is_hide();
+    void is_reg(QString);
 
 };
 

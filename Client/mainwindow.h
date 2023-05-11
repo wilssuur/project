@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "registrationwindow.h"
+#include "task.h"
 #include <QMainWindow>
-#include <registrationwindow.h>
-#include <task.h>
+#include <QMessageBox>
+#include "singletonclient.h"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,12 +19,15 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-signals:
-    void mainwindow();
+/*signals:
+    void mainwindow(QString);*/
 private slots:
     void on_registrationButton_clicked();
 
     void on_EnterButton_clicked();
+
+    void on_message_from_server(QString msg);
+    void slot_auth(QString msg);
 
 private:
     Ui::MainWindow *ui;
