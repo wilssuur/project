@@ -44,4 +44,7 @@ signals:
     void is_hide();
 };
 
+//void setLabel(const QString& x);
+
 #endif // TASK_H
+

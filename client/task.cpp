@@ -1,5 +1,6 @@
 #include "task.h"
 #include "ui_task.h"
+#include "singletonclient.h"
 
 task::task(QWidget *parent) :
     QDialog(parent),
@@ -50,13 +51,6 @@ void task::on_VariantButton_clicked()
 
 
 
-void task::on_statisticsButton_clicked()
-{
-    statistics stat;
-    stat.setModal(true);
-    stat.exec();
-}
-
 void task::set_login(QString log){
     login = log;
 }
@@ -89,4 +83,17 @@ void task::on_againButton_clicked()
     }
 
 }
+
+
+
+
+void task::on_statisticsButton_clicked()
+{
+    statistics stat;
+    stat.setModal(true);
+    stat.exec();
+
+    //SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+}
+
 

@@ -30,7 +30,7 @@ private:
 protected:
     SingletonDataBase(){
         qDebug()<<"SingletonDataBase()\n";
-        db.setDatabaseName("D:/MathLog/new11.05/project/server/sqliteuser.db");
+        db.setDatabaseName("D:/matlogic/draft/project/server/sqliteuser.db");
         //db.setDatabaseName("sqliteuser.db");
 
         if(!db.open())

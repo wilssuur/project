@@ -26,12 +26,26 @@ private slots:
 
     void on_EnterButton_clicked();
 
-    void on_message_from_server(QString msg);
+    void on_message_from_server_auth(QString msg);
     void slot_auth(QString msg);
+
+    //new
+ //   void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     RegistrationWindow *registrationwindow;
     task *taskwindow;
+
+    //new
+//signals:
+ //   void mySignalread(const QString &text);
 };
 #endif // MAINWINDOW_H
+/*
+private slots: //взял этот кусок, чтобы Вы понимали, где вставлять описание сигнала
+void on_pushButton_clicked();
+
+signals:
+void mySignal(const QString &text); //название сигнала потом сами пропишите*/
+

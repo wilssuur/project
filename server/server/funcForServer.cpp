@@ -38,7 +38,10 @@ QByteArray parsing(QByteArray str)
 
     else if (mystr == "ShowStat") {
         mystr = str.trimmed().toStdString().substr(str.toStdString().find(" ")+1, -1);
-        return showstat();
+        std::string login = mystr;
+
+
+        return showstat(login);
     }
 
 
@@ -96,7 +99,7 @@ QByteArray reg(std::string sname, std::string name, std::string lname, std::stri
                                                                        ));
 
     QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users where user_login = '"+log+"';"));
-     qDebug()<<"Registration completed"<<res;
+    qDebug()<<"Registration completed"<<res;
 
      QString res_auth = QString::fromUtf8(auth(log,pas));
     if(res_auth.left(5)=="auth+")
@@ -107,14 +110,16 @@ QByteArray reg(std::string sname, std::string name, std::string lname, std::stri
 
 }
 
-QByteArray showstat()
+QByteArray showstat(std::string login)
 {
     //return QString::fromStdString((std::string)"Statistics: for " + user + "\r\n").toUtf8();
-    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users"));
-    if (res!="")
-        return (QString("show " +res+" \r\n")).toUtf8();
+    QString task1 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_1 FROM users where user login = " + login));
+    QString task2 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_2 FROM users"));
+    QString task3 = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_3 FROM users"));
+    if (task1 != "" and task2 != "" and task3 != "")
+        return (QString("show+" + task1 + " " + task2 + " " + task3 + "\r\n")).toUtf8();
     else
-        return "-\r\n";
+        return "show-\r\n";
 }
 
 QByteArray task1()

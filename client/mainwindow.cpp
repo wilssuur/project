@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     taskwindow = new task;
     connect(taskwindow, &task::is_hide, this, &MainWindow::show);
-    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server_auth, this, &MainWindow::on_message_from_server);
+    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server_auth, this, &MainWindow::on_message_from_server_auth);
     registrationwindow  = new RegistrationWindow;
 
     connect(registrationwindow, &RegistrationWindow::is_hide, this, &MainWindow::show);
@@ -45,7 +45,7 @@ void MainWindow::on_EnterButton_clicked()
 
 }
 
-void MainWindow::on_message_from_server(QString msg)
+void MainWindow::on_message_from_server_auth(QString msg)
 {
     if (msg.left(5) == "auth+"){
         QMessageBox::information(this, "Успешно", "Вы прошли авторизацию");
