@@ -35,6 +35,7 @@ private slots:
     void on_checkansButton_clicked();
 
     void on_againButton_clicked();
+    void on_message_from_server_task(QString msg);
 
 private:
     Ui::task *ui;

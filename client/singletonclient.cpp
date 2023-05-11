@@ -38,6 +38,9 @@ void SingletonClient::slotServerRead(){
         emit msg_from_server_auth(msg);
     if(msg.left(4) == "stat")
         emit msg_from_server_stat(msg);
+    if(msg.left(4) == "stat")
+        emit msg_from_server_task(msg);
+
 }
 
 SingletonClient::~SingletonClient(){

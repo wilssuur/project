@@ -9,6 +9,7 @@ task::task(QWidget *parent) :
     ui->setupUi(this);
     //ui->checkansButton->hide();
     //ui->answerEdit->hide();
+    connect(SingletonClient::getInstance(), &SingletonClient::msg_from_server_task, this, &task::on_message_from_server_task);
 }
 
 task::~task()
@@ -84,16 +85,20 @@ void task::on_againButton_clicked()
 
 }
 
+void task::on_message_from_server_task(QString msg)
+{
 
 
+}
 
 void task::on_statisticsButton_clicked()
 {
     statistics stat;
     stat.setModal(true);
     stat.exec();
+    //login =
 
-    //SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+    //SingletonClient::getInstance()->send_msg_to_server("Auth "+login);
 }
 
 

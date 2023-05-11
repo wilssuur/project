@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QString>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -48,6 +49,7 @@ void MainWindow::on_EnterButton_clicked()
 void MainWindow::on_message_from_server_auth(QString msg)
 {
     if (msg.left(5) == "auth+"){
+        //std::string login = msg.substr(msg.find(" ")+1,-1);
         QMessageBox::information(this, "Успешно", "Вы прошли авторизацию");
         ui->lineEditlogin->setText("");
         ui->lineEditpassword->setText("");
