@@ -87,7 +87,7 @@ void task::on_againButton_clicked()
 
 void task::on_message_from_server_task(QString msg)
 {
-
+    ui->labellogin->setText(msg);
 
 }
 
@@ -96,7 +96,7 @@ void task::on_statisticsButton_clicked()
     statistics stat;
     stat.setModal(true);
     stat.exec();
-    //login =
+    login = ui->labellogin->text();
 
     //SingletonClient::getInstance()->send_msg_to_server("Auth "+login);
 }

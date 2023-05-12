@@ -18,7 +18,8 @@ statistics::~statistics()
 void statistics::on_message_from_server_stat(QString msg)
 {
     if (msg.left(5) == "stat+"){
-        //labelfio->setText(msg);
+        ui->labelfio->clear();
+        ui->labelfio->setText(msg);
 
         show();
         //QString login = ui->lineEditloginr->text();
