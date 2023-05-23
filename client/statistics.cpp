@@ -17,15 +17,19 @@ statistics::~statistics()
 
 void statistics::on_message_from_server_stat(QString msg)
 {
-    if (msg.left(5) == "stat+"){
-        ui->labelfio->clear();
-        ui->labelfio->setText(msg);
 
+    msg = msg.trimmed();
+    QStringList str_list = (QString(msg)).split("+");
+    //std::string str = str_list[0].toStdString();
+    std::string task1 = str_list[1].toStdString();
+    std::string task2 = str_list[2].toStdString();
+    std::string task3 = str_list[3].toStdString();
+    if (msg.left(4) == "stat"){
         show();
-        //QString login = ui->lineEditloginr->text();
-        //QString password = ui->lineEditpasswordr1->text();
-        //emit is_reg("Auth "+login+" "+password);
-        //SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+        ui->labeltask1->setText(QString::fromStdString(task1));
+        ui->labeltask2->setText(QString::fromStdString(task2));
+        ui->labeltask3->setText(QString::fromStdString(task3));
+        //ui->login->setText(QString::fromStdString(task3));
         //this->on_backButton_clicked();
     }
     else {

@@ -56,6 +56,7 @@ void MainWindow::on_message_from_server_auth(QString msg)
         this->close();
         taskwindow->set_login(msg.mid(6));
         taskwindow->show();
+
     }
     else if (msg.left(5) == "auth-"){
         QMessageBox::warning(this, "Неуспешно", "Неверный логин или пароль");
