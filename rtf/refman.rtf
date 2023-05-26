@@ -221,8 +221,7 @@ Singleton class for database operations })} \tab {\field\fldedit {\*\fldinst PAG
 {\b {\b SingletonDataBaseDestroyer} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Helper class for destroying {\b SingletonDataBase} instance })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAADM \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
-{\b {\b SingletonDestroyer} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-For destroying the {\b SingletonClient} instance })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAADP \\*MERGEFORMAT}{\fldrslt pagenum}}
+{\b {\b SingletonDestroyer} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAADP \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b {\b statistics} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 For displaying statistics information })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAADS \\*MERGEFORMAT}{\fldrslt pagenum}}
@@ -261,7 +260,7 @@ The {\b MainWindow} class header file })} \tab {\field\fldedit {\*\fldinst PAGER
 {\b client/{\b registrationwindow.cpp} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAW \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b client/{\b registrationwindow.h} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for registration for registration window })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAX \\*MERGEFORMAT}{\fldrslt pagenum}}
+Contains registration functions for registration window })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAX \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b client/{\b singletonclient.cpp} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAY \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
@@ -270,12 +269,13 @@ Contains the {\b SingletonClient} class for managing the client-side connection 
 \par
 {\b client/{\b statistics.cpp} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABA \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
-{\b client/{\b statistics.h} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABB \\*MERGEFORMAT}{\fldrslt pagenum}}
+{\b client/{\b statistics.h} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Contains functions for statistics and connection between server and client })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABB \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b client/{\b task.cpp} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABC \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b client/{\b task.h} ({\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for task window. Contains class for managing task window and connection between server, client and statistics })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABD \\*MERGEFORMAT}{\fldrslt pagenum}}
+Contains functions that generate tasks and connections with statistics })} \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABD \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
 {\b server/{\b DataBase.cpp} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAABE \\*MERGEFORMAT}{\fldrslt pagenum}}
 \par
@@ -1308,9 +1308,6 @@ SingletonDestroyer Class Reference\par \pard\plain
 {\bkmkend AAAAAAAADP}
 \par
 {
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The {\b SingletonDestroyer} class for destroying the {\b SingletonClient} instance. }}\par
-{
 {\f2 #include <singletonclient.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
@@ -1322,14 +1319,6 @@ Public Member Functions\par
 \pard\plain \s120\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b initialize} ({\b SingletonClient} *p)\par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Detailed Description\par
-\pard\plain 
-{
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The {\b SingletonDestroyer} class for destroying the {\b SingletonClient} instance. \par
-}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
@@ -2050,40 +2039,44 @@ mainwindow.h\par \pard\plain
 {\bkmkend AAAAAAAAAC}
 Go to the documentation of this file.{
 \pard\plain \s40\li0\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid 1 \par
-5 {\cf21 #ifndef MAINWINDOW_H}\par
-6 {\cf21 #define MAINWINDOW_H}\par
-7 {\cf21 #include "registrationwindow.h"}\par
-8 {\cf21 #include "task.h"}\par
-9 {\cf21 #include <QMainWindow>}\par
-10 {\cf21 #include <QMessageBox>}\par
-11 {\cf21 #include "singletonclient.h"}\par
-12 \par
-13 \par
-14 QT_BEGIN_NAMESPACE\par
-15 {\cf17 namespace }Ui \{ {\cf17 class }MainWindow; \}\par
-16 QT_END_NAMESPACE\par
-17 \par
+6 {\cf21 #ifndef MAINWINDOW_H}\par
+7 {\cf21 #define MAINWINDOW_H}\par
+8 \par
+9 {\cf21 #include "registrationwindow.h"}\par
+10 {\cf21 #include "task.h"}\par
+11 {\cf21 #include <QMainWindow>}\par
+12 {\cf21 #include <QMessageBox>}\par
+13 {\cf21 #include "singletonclient.h"}\par
+14 \par
+15 QT_BEGIN_NAMESPACE\par
+16 {\cf17 namespace }Ui \{ {\cf17 class }MainWindow; \}\par
+17 QT_END_NAMESPACE\par
+18 \par
 22 {\cf17 class }MainWindow : {\cf17 public} QMainWindow\par
 23 \{\par
 24     Q_OBJECT\par
 25 \par
 26 {\cf17 public}:\par
 31     MainWindow(QWidget *parent = {\cf17 nullptr});\par
-35     ~MainWindow();\par
-36 \par
-37 {\cf17 private} slots:\par
-41     {\cf18 void} on_registrationButton_clicked();\par
-45     {\cf18 void} on_EnterButton_clicked();\par
-50     {\cf18 void} on_message_from_server_auth(QString msg);\par
-55     {\cf18 void} slot_auth(QString msg);\par
-56 \par
-57 \par
-58 {\cf17 private}:\par
-59     Ui::MainWindow *ui; \par
-60     RegistrationWindow *registrationwindow; \par
-61     task *taskwindow; \par
-63 \};\par
-64 {\cf21 #endif }{\cf20 // MAINWINDOW_H}\par
+32 \par
+36     ~MainWindow();\par
+37 \par
+38 {\cf17 private} slots:\par
+42     {\cf18 void} on_registrationButton_clicked();\par
+43 \par
+47     {\cf18 void} on_EnterButton_clicked();\par
+48 \par
+53     {\cf18 void} on_message_from_server_auth(QString msg);\par
+54 \par
+59     {\cf18 void} slot_auth(QString msg);\par
+60 \par
+61 {\cf17 private}:\par
+62     Ui::MainWindow *ui; \par
+63     RegistrationWindow *registrationwindow; \par
+64     task *taskwindow; \par
+66 \};\par
+67 \par
+68 {\cf21 #endif }{\cf20 // MAINWINDOW_H}\par
 }
 \par \pard\plain 
 
@@ -2114,7 +2107,7 @@ client/registrationwindow.h File Reference\par \pard\plain
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for registration for registration window. }}\par
+Contains registration functions for registration window. }}\par
 {
 \pard\plain \s18\widctlpar\fs22\cgrid {\f2 #include <QDialog>}\par
 {\f2 #include <QMessageBox>}\par
@@ -2141,7 +2134,7 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for registration for registration window. \par
+Contains registration functions for registration window. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 }}
@@ -2157,38 +2150,36 @@ registrationwindow.h\par \pard\plain
 {\bkmkend AAAAAAAAAD}
 Go to the documentation of this file.{
 \pard\plain \s40\li0\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid 1 \par
-6 {\cf21 #ifndef REGISTRATIONWINDOW_H}\par
-7 {\cf21 #define REGISTRATIONWINDOW_H}\par
-8 \par
-9 {\cf21 #include <QDialog>}\par
-10 {\cf21 #include <QMessageBox>}\par
-11 {\cf21 #include <QString>}\par
-12 {\cf20 //#include "task.h"}\par
-13 {\cf20 //#include "mainwindow.h"}\par
-14 \par
-15 {\cf17 namespace }Ui \{\par
-16 {\cf17 class }RegistrationWindow;\par
-17 \}\par
-18 \par
-19 {\cf17 class }RegistrationWindow : {\cf17 public} QDialog\par
-20 \{\par
-21     Q_OBJECT\par
-22 \par
-23 {\cf17 public}:\par
-24     {\cf17 explicit} RegistrationWindow(QWidget *parent = {\cf17 nullptr}); \par
-25     ~RegistrationWindow(); \par
-27 {\cf17 private} slots:\par
-28     {\cf18 void} on_pushButtoncheckregistration_clicked(); \par
-29     {\cf18 void} on_backButton_clicked(); \par
-30     {\cf18 void} on_message_from_server_reg(QString msg); \par
-32 {\cf17 private}:\par
-33     Ui::RegistrationWindow *ui; \par
-35 signals:\par
-36     {\cf18 void} is_hide(); \par
-37     {\cf18 void} is_reg(QString); \par
-39 \};\par
-40 \par
-41 {\cf21 #endif }{\cf20 // REGISTRATIONWINDOW_H}\par
+5 {\cf21 #ifndef REGISTRATIONWINDOW_H}\par
+6 {\cf21 #define REGISTRATIONWINDOW_H}\par
+7 \par
+8 {\cf21 #include <QDialog>}\par
+9 {\cf21 #include <QMessageBox>}\par
+10 {\cf21 #include <QString>}\par
+11 \par
+12 {\cf17 namespace }Ui \{\par
+13 {\cf17 class }RegistrationWindow;\par
+14 \}\par
+15 \par
+16 {\cf17 class }RegistrationWindow : {\cf17 public} QDialog\par
+17 \{\par
+18     Q_OBJECT\par
+19 \par
+20 {\cf17 public}:\par
+21     {\cf17 explicit} RegistrationWindow(QWidget *parent = {\cf17 nullptr}); \par
+22     ~RegistrationWindow(); \par
+24 {\cf17 private} slots:\par
+25     {\cf18 void} on_pushButtoncheckregistration_clicked(); \par
+26     {\cf18 void} on_backButton_clicked(); \par
+27     {\cf18 void} on_message_from_server_reg(QString msg); \par
+29 {\cf17 private}:\par
+30     Ui::RegistrationWindow *ui; \par
+32 signals:\par
+33     {\cf18 void} is_hide(); \par
+34     {\cf18 void} is_reg(QString); \par
+36 \};\par
+37 \par
+38 {\cf21 #endif }{\cf20 // REGISTRATIONWINDOW_H}\par
 }
 \par \pard\plain 
 
@@ -2231,11 +2222,9 @@ Classes\par
 
 {
 \pard\plain \s120\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-class {\b SingletonDestroyer}{
-\pard\plain \s61\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The {\b SingletonDestroyer} class for destroying the {\b SingletonClient} instance. }}\par}
-\pard\plain \s120\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-class {\b SingletonClient}{
+class {\b SingletonDestroyer}\pard\plain \s120\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+class {\b SingletonClient}\par
+{
 \pard\plain \s61\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 The {\b SingletonClient} class for managing the client-side connection to the server. }}\par}
 }
@@ -2271,42 +2260,43 @@ Go to the documentation of this file.{
 13 {\cf21 #include<QByteArray>}\par
 14 {\cf21 #include<QString>}\par
 15 \par
-16 {\cf17 class }SingletonClient;\par
-20 {\cf17 class }SingletonDestroyer\par
-21 \{\par
-22 {\cf17 private}:\par
-23     SingletonClient * p_instance;\par
-24 {\cf17 public}:\par
-25     ~SingletonDestroyer() \{ {\cf17 delete} p_instance; \}\par
-26     {\cf18 void} initialize(SingletonClient * p)\{p_instance = p;\};\par
-27 \};\par
-28 \par
-32 {\cf17 class }SingletonClient : {\cf17 public} QObject\par
-33 \{\par
-34     Q_OBJECT\par
-35 {\cf17 private}:\par
-36     {\cf17 static} SingletonClient * p_instance; \par
-37     {\cf17 static} SingletonDestroyer destroyer; \par
-38     QTcpSocket * mTcpSocket; \par
-39 {\cf17 protected}:\par
-40     {\cf17 explicit} SingletonClient(QObject *parent = {\cf17 nullptr}); \par
-41     SingletonClient({\cf17 const} SingletonClient& ) = {\cf17 delete}; \par
-42     SingletonClient& operator = (SingletonClient &) = {\cf17 delete}; \par
-43     ~SingletonClient(); \par
-44     {\cf17 friend} {\cf17 class }SingletonDestroyer; \par
-45 {\cf17 public}:\par
-46     {\cf17 static} SingletonClient* getInstance(); \par
-47     {\cf18 void} send_msg_to_server(QString query); \par
-48 signals:\par
-49     {\cf18 void} msg_from_server_auth(QString msg); \par
-50     {\cf18 void} msg_from_server_reg(QString msg); \par
-51     {\cf18 void} msg_from_server_stat(QString msg); \par
-52     {\cf18 void} msg_from_server_task(QString msg); \par
-53 {\cf17 private} slots:\par
-54     {\cf18 void} slotServerRead(); \par
-56 \};\par
-57 \par
-58 {\cf21 #endif }{\cf20 // SINGLETONCLIENT_H}\par
+20 {\cf17 class }SingletonClient;\par
+21 \par
+22 {\cf17 class }SingletonDestroyer\par
+23 \{\par
+24 {\cf17 private}:\par
+25     SingletonClient * p_instance;\par
+26 {\cf17 public}:\par
+27     ~SingletonDestroyer() \{ {\cf17 delete} p_instance; \}\par
+28     {\cf18 void} initialize(SingletonClient * p)\{p_instance = p;\};\par
+29 \};\par
+30 \par
+34 {\cf17 class }SingletonClient : {\cf17 public} QObject\par
+35 \{\par
+36     Q_OBJECT\par
+37 {\cf17 private}:\par
+38     {\cf17 static} SingletonClient * p_instance; \par
+39     {\cf17 static} SingletonDestroyer destroyer; \par
+40     QTcpSocket * mTcpSocket; \par
+41 {\cf17 protected}:\par
+42     {\cf17 explicit} SingletonClient(QObject *parent = {\cf17 nullptr}); \par
+43     SingletonClient({\cf17 const} SingletonClient& ) = {\cf17 delete}; \par
+44     SingletonClient& operator = (SingletonClient &) = {\cf17 delete}; \par
+45     ~SingletonClient(); \par
+46     {\cf17 friend} {\cf17 class }SingletonDestroyer; \par
+47 {\cf17 public}:\par
+48     {\cf17 static} SingletonClient* getInstance(); \par
+49     {\cf18 void} send_msg_to_server(QString query); \par
+50 signals:\par
+51     {\cf18 void} msg_from_server_auth(QString msg); \par
+52     {\cf18 void} msg_from_server_reg(QString msg); \par
+53     {\cf18 void} msg_from_server_stat(QString msg); \par
+54     {\cf18 void} msg_from_server_task(QString msg); \par
+55 {\cf17 private} slots:\par
+56     {\cf18 void} slotServerRead(); \par
+58 \};\par
+59 \par
+60 {\cf21 #endif }{\cf20 // SINGLETONCLIENT_H}\par
 }
 \par \pard\plain 
 
@@ -2333,6 +2323,10 @@ client/statistics.h File Reference\par \pard\plain
 {\xe \v client/statistics.h}
 {\bkmkstart AAAAAAAABB}
 {\bkmkend AAAAAAAABB}
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Contains functions for statistics and connection between server and client. }}\par
 {
 \pard\plain \s18\widctlpar\fs22\cgrid {\f2 #include <QDialog>}\par
 }
@@ -2354,6 +2348,16 @@ Namespaces\par
 \pard\plain \s120\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 namespace {\b Ui}\par
 }
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Detailed Description\par
+\pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Contains functions for statistics and connection between server and client. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+}}
 \par \pard\plain 
 
 \pard\plain \sect\sbkpage
@@ -2365,30 +2369,31 @@ statistics.h\par \pard\plain
 {\bkmkstart AAAAAAAAAF}
 {\bkmkend AAAAAAAAAF}
 Go to the documentation of this file.{
-\pard\plain \s40\li0\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid 1 {\cf21 #ifndef STATISTICS_H}\par
-2 {\cf21 #define STATISTICS_H}\par
-3 \par
-4 {\cf21 #include <QDialog>}\par
-5 \par
-6 {\cf17 namespace }Ui \{\par
-7 {\cf17 class }statistics;\par
-8 \}\par
+\pard\plain \s40\li0\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid 1 \par
+5 {\cf21 #ifndef STATISTICS_H}\par
+6 {\cf21 #define STATISTICS_H}\par
+7 \par
+8 {\cf21 #include <QDialog>}\par
 9 \par
-13 {\cf17 class }statistics : {\cf17 public} QDialog\par
-14 \{\par
-15     Q_OBJECT\par
-16 \par
-17 {\cf17 public}:\par
-22     {\cf17 explicit} statistics(QWidget *parent = {\cf17 nullptr});\par
-26     ~statistics();\par
-27 \par
-28 {\cf17 private} slots:\par
-33     {\cf18 void} on_message_from_server_stat(QString msg);\par
-34 {\cf17 private}:\par
-35     Ui::statistics *ui;\par
-36 \};\par
-37 \par
-38 {\cf21 #endif }{\cf20 // STATISTICS_H}\par
+10 {\cf17 namespace }Ui \{\par
+11 {\cf17 class }statistics;\par
+12 \}\par
+13 \par
+17 {\cf17 class }statistics : {\cf17 public} QDialog\par
+18 \{\par
+19     Q_OBJECT\par
+20 \par
+21 {\cf17 public}:\par
+26     {\cf17 explicit} statistics(QWidget *parent = {\cf17 nullptr});\par
+30     ~statistics();\par
+31 \par
+32 {\cf17 private} slots:\par
+37     {\cf18 void} on_message_from_server_stat(QString msg);\par
+38 {\cf17 private}:\par
+39     Ui::statistics *ui;\par
+40 \};\par
+41 \par
+42 {\cf21 #endif }{\cf20 // STATISTICS_H}\par
 }
 \par \pard\plain 
 
@@ -2418,7 +2423,7 @@ client/task.h File Reference\par \pard\plain
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for task window. Contains class for managing task window and connection between server, client and statistics. }}\par
+Contains functions that generate tasks and connections with statistics. }}\par
 {
 \pard\plain \s18\widctlpar\fs22\cgrid {\f2 #include <QDialog>}\par
 {\f2 #include <QMessageBox>}\par
@@ -2452,7 +2457,7 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Contains functions for task window. Contains class for managing task window and connection between server, client and statistics. \par
+Contains functions that generate tasks and connections with statistics. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 }}
@@ -2607,7 +2612,7 @@ Go to the documentation of this file.{
 49 {\cf17 protected}:\par
 53     SingletonDataBase() \{\par
 54         qDebug() << {\cf22 "SingletonDataBase()\\n"};\par
-55         db.setDatabaseName({\cf22 "D:\\\\MathLog\\\\new11may\\\\project\\\\project\\\\server\\\\sqliteuser.db"}); {\cf20 // Set database name}\par
+55         db.setDatabaseName({\cf22 "D:/matlogic/draft/project/server/sqliteuser.db"}); {\cf20 // Set database name}\par
 56         {\cf20 //db.setDatabaseName("sqliteuser.db");}\par
 57 \par
 58         {\cf19 if}(!db.open())\par
