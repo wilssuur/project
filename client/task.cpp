@@ -27,26 +27,40 @@ void task::on_leavaccountButton_clicked()
 
 void task::on_VariantButton_clicked()
 {
-    int tasknumber =0;
-    if (ui->radioButton->isChecked())
-    {
-        tasknumber = 1;
+
+    QString task = "";
+    if (ui->radioButton->isChecked()){
+        task = get_variant1();
     }
     else if (ui->radioButton_2->isChecked()){
-        tasknumber=2;
+        task = get_variant2();
     }
     else if (ui->radioButton_3->isChecked()){
-        tasknumber=3;
+        task = get_variant1();
     }
     else{
         QMessageBox::warning(this,"Ошибка", "Выберите номер задачи!");
         return;
     }
-
     ui->answerEdit->show();
-    QString variant = get_variant(tasknumber);
-    //ui->labeltask->setText("Условие задачи "+get_task(tasknumber));
-    ui->labelvariant->setText(variant);
+
+    QStringList str_list = QString(task).split("+");
+
+    std::string t = str_list[0].toStdString();
+    std::string e = str_list[1].toStdString();
+    ui->labelcount->setText(QString::fromStdString(t));
+    int x = QString::fromStdString(t).toInt();
+    QString tops = "";
+    for (int i = 1; i <= x; i++){
+        QString s = QString::number(i);
+        tops = tops + s + ", ";
+    }
+    //((std::string)tops).erase(std::prev(t.end()));
+    e.erase(std::prev(e.end()));
+
+    ui->labeltops->setText(tops);
+    ui->labeledges->setText(QString::fromStdString(e));
+
     ui->labelanswer->setText("Ответ:");
     ui->checkansButton->show();
 }
@@ -65,16 +79,23 @@ void task::on_checkansButton_clicked()
     {
         tasknumber = "1";
     }
+
     else if (ui->radioButton_2->isChecked()){
         tasknumber = "2";
     }
+
     else if (ui->radioButton_3->isChecked()){
         tasknumber = "3";
     }
+
     if (ui->answerEdit->text() != ""){
-        QString variant = ui->labelvariant->text();
+
+        QString count_tops = ui->labelcount->text();
+        QString edges = ui->labeledges->text();
         QString answer = ui->answerEdit->text();
-        SingletonClient::getInstance()->send_msg_to_server("Check" + tasknumber + " " + answer + " " + variant);
+        QString loginn = ui->labellogint->text();
+        QString task = count_tops + "+" + edges + "";
+        SingletonClient::getInstance()->send_msg_to_server("Check" + tasknumber + " " + task + " " + answer + " " + loginn);
         ui->labelresult->setText("проверка");
     }
     else {

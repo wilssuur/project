@@ -52,6 +52,8 @@ void MyTcpServer::slotServerRead(){
         mystr = array.trimmed().toStdString();
     }
     qDebug()<<"Recieve:"<<QString::fromStdString(mystr);
+    array.clear();
+    array.append(mystr);
     if (mystr == "stop") {
         curr_mTcpSocket->write("Goodbye!");
         slotClientDisconnected();

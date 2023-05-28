@@ -2,6 +2,11 @@
 #include <QString>
 #include <QDebug>
 
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+
 QByteArray parsing(QByteArray str)
 {
     std::string mystr = str.trimmed().toStdString().substr(0,str.toStdString().find(" "));
@@ -49,24 +54,43 @@ QByteArray parsing(QByteArray str)
         mystr = str.toStdString().substr(str.toStdString().find(" ")+1, -1);
 
         QStringList str_list = (QString(str)).split(" ");
-        std::string task = str_list[1].toStdString();
-        return task1(task);
+        QString log = str_list.back();
+        str_list.pop_back();
+        QByteArray res = QByteArray::number(2*int(task1(str_list[1],str_list[2]))-1);
+        qDebug() << log << "   " << log.toStdString();
+        qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
+        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
+
+        return "check " + res;
     }
 
     else if (mystr == "Check2") {
         mystr = str.toStdString().substr(str.toStdString().find(" ")+1, -1);
-        QStringList str_list = (QString(str)).split(" ");
-        std::string task = str_list[1].toStdString();
 
-        return task2(task);
+        QStringList str_list = (QString(str)).split(" ");
+        QString log = str_list.back();
+        str_list.pop_back();
+        QByteArray res = QByteArray::number(2*int(task2(str_list[1],str_list[2]))-1);
+        //qDebug() << log << "   " << log.toStdString();
+        qDebug() << str_list[0] << " " << str_list[1];
+        qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
+        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
+
+        return "check " + res;
     }
 
     else if (mystr == "Check3") {
         mystr = str.toStdString().substr(str.toStdString().find(" ")+1, -1);
-        QStringList str_list = (QString(str)).split(" ");
-        std::string task = str_list[1].toStdString();
 
-        return task3(task);
+        QStringList str_list = (QString(str)).split(" ");
+        QString log = str_list.back();
+        str_list.pop_back();
+        QByteArray res = QByteArray::number(2*int(task3(str_list[1],str_list[2]))-1);
+        qDebug() << log << "   " << log.toStdString();
+        qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
+        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
+
+        return "check " + res;
     }
 
     else if (mystr == "Exit") {
@@ -131,51 +155,69 @@ QByteArray showstat(std::string login)
         return "stat-\r\n";
 }
 
-QByteArray task1(std::string answer)
-{
-    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
-    //QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users"));
-    QString res = "Задача 1. \r\n Построить цикл.";
-    return (QString("1\r\n")).toUtf8();
 
-}
 
-QByteArray task2(std::string answer)
+bool task1(QString task, QString user_answer)
 {
-    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
-    QString res = "Задача 1. \r\n Поиск маршрута.";
-    return (QString("2\r\n")).toUtf8();
+    qDebug() << " task " << task << "answer" << user_answer;
+    QStringList str_list = (QString(task)).split("+");
+    std::string size = str_list[0].toStdString(); // количество вершин (одно число)
+    std::string edges = str_list[1].toStdString(); // список ребер в формате (1,2),(1,4) - без пробелов
+
+    return false;
 }
 
 
-QByteArray task3(std::string answer)
+bool task3(QString task, QString user_answer)
 {
-    //return QString::fromStdString((std::string)"Statistics: for\r\n").toUtf8();
-    QString res = "Задача 1. \r\n Построить цикл.";
-    return (QString("3\r\n")).toUtf8();
+    qDebug() << " task " << task << "answer" << user_answer;
+    QStringList str_list = (QString(task)).split("+");
+    std::string size = str_list[0].toStdString(); // количество вершин (одно число)
+    std::string edges = str_list[1].toStdString(); // список ребер в формате (1,2),(1,4) - без пробелов
+
+    return true;
 }
 
-
-
-/*QByteArray check(std::string task, std::string variant, std::string answer)
-{
-    //check task# random_varian answer_from_user
-    //if correct update stat in database +1, else -1
-    //check+1 / check+0
-    //return QString::fromStdString((std::string)"Tasks to svole" + "\r\n").toUtf8();
-
-    QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT task_result FROM users"));
-    if (res!="")
-        return "check+1\r\n";
-    else
-        return "check-1\r\n";
-}*/
 
 
 QByteArray exit()
 {
+
     //return QString::fromStdString((std::string)"Goodbye!" + "\r\n").toUtf8();
     return "exit\r\n";
 
 }
+
+
+bool task2(QString task, QString user_answer)
+{
+    qDebug() << " task " << task << "answer" << user_answer;
+    QStringList str_list = (QString(task)).split("+");
+    std::string size = str_list[0].toStdString();
+    std::string edges = str_list[1].toStdString();
+
+    /*std::string qwe = str_list[1].toStdString();
+    qDebug() << qwe;
+    QStringList str_list2 = (QString::fromStdString(qwe)).split(").");
+    qDebug() << str_list2[0];
+    std::string edges = str_list[0].toStdString();
+
+
+    QStringList one_edge = (QString::fromStdString(edges)).split("),(");
+
+    qDebug() << "++++" << one_edge[0].toStdString() << " " << one_edge[1].toStdString();*/
+
+    /*int size = tops.toInt();
+    int matrix[size][size];
+    for (int i = 0; i <= size; i ++){
+        for (int j = 0; i <= size; j ++)
+        matrix[i][j] = 0;
+    }*/
+    return true;
+}
+
+    /*QString server_answer;
+    if (server_answer == user_answer)
+        return true;
+    else return false;*/
 
