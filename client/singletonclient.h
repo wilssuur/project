@@ -1,21 +1,11 @@
-/**
- * @file singletonclient.h
- * @brief Contains the SingletonClient class for managing the client-side connection to the server.
- */
-
 #ifndef SINGLETONCLIENT_H
 #define SINGLETONCLIENT_H
-
 #include<QDebug>
 #include<QObject>
 #include<QtNetwork>
 #include<QTcpSocket>
 #include<QByteArray>
 #include<QString>
-
-/**
- * @brief The SingletonDestroyer class for destroying the SingletonClient instance.
- */
 
 class SingletonClient;
 
@@ -28,33 +18,32 @@ public:
     void initialize(SingletonClient * p){p_instance = p;};
 };
 
-/**
- * @brief The SingletonClient class for managing the client-side connection to the server.
- */
+
 class SingletonClient : public QObject
 {
     Q_OBJECT
 private:
-    static SingletonClient * p_instance; /**< The instance of the SingletonClient. */
-    static SingletonDestroyer destroyer; /**< The destroyer for the SingletonClient instance. */
-    QTcpSocket * mTcpSocket; /**< The TCP socket for the client-side connection to the server. */
+    static SingletonClient * p_instance;
+    static SingletonDestroyer destroyer;
+    QTcpSocket * mTcpSocket;
 protected:
-    explicit SingletonClient(QObject *parent = nullptr); /**< Constructor for the SingletonClient class. */
-    SingletonClient(const SingletonClient& ) = delete; /**< Copy constructor for the SingletonClient class. */
-    SingletonClient& operator = (SingletonClient &) = delete; /**< Assignment operator for the SingletonClient class. */
-    ~SingletonClient(); /**< Destructor for the SingletonClient class. */
-    friend class SingletonDestroyer; /**< Friend class for the SingletonDestroyer class. */
+    explicit SingletonClient(QObject *parent = nullptr);
+    SingletonClient(const SingletonClient& ) = delete;
+    SingletonClient& operator = (SingletonClient &) = delete;
+    ~SingletonClient();
+    friend class SingletonDestroyer;
 public:
-    static SingletonClient* getInstance(); /**< Function to get the instance of the SingletonClient. */
-    void send_msg_to_server(QString query); /**< Function to send a message to the server. */
+    static SingletonClient* getInstance();
+    void send_msg_to_server(QString query);
 signals:
-    void msg_from_server_auth(QString msg); /**< Signal for message from server for authentication. */
-    void msg_from_server_reg(QString msg); /**< Signal for message from server for registration. */
-    void msg_from_server_stat(QString msg); /**< Signal for message from server for status. */
-    void msg_from_server_task(QString msg); /**< Signal for message from server for task. */
+    void msg_from_server_auth(QString msg);
+    void msg_from_server_reg(QString msg);
+    void msg_from_server_stat(QString msg);
+    void msg_from_server_task(QString msg);
 private slots:
-    void slotServerRead(); /**< Slot for reading messages from the server. */
+    void slotServerRead();
 
 };
+
 
 #endif // SINGLETONCLIENT_H

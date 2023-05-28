@@ -1,0 +1,77 @@
+\doxysection{Date\+Base.\+h}
+\hypertarget{_date_base_8h_source}{}\label{_date_base_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ Singlton}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ Singlton}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QVariant>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QSqlDatabase>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QSqlQuery>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QSqlError>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QSqlRecord>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}};}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_singleton_data_base_destroyer}{SingletonDataBaseDestroyer}}}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\ *\ p\_instance;\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_singleton_data_base_destroyer_ac3cf2feff523c9ae789685936ca2fd56}{\string~SingletonDataBaseDestroyer}}()\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ p\_instance;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}\string~SingletonDataBaseDestroyer"{}};}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_singleton_data_base_destroyer_a443519f287f0f4c3bc826ecf44b0f937}{initialize}}(\mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\ *\ p)\ \{\ p\_instance\ =\ p;\ \};}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\ *\ p\_instance;\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_singleton_data_base_destroyer}{SingletonDataBaseDestroyer}}\ destroyer;\ }
+\DoxyCodeLine{00048\ \ \ \ \ QSqlDatabase\ db\ =\ QSqlDatabase::addDatabase(\textcolor{stringliteral}{"{}QSQLITE"{}});\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_singleton_data_base_ad98f8e54620f7cd1399cf2f9d70f0a4f}{SingletonDataBase}}()\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}SingletonDataBase()\(\backslash\)n"{}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ db.setDatabaseName(\textcolor{stringliteral}{"{}D:/matlogic/draft/project/server/sqliteuser.db"{}});\ \textcolor{comment}{//\ Set\ database\ name}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{//db.setDatabaseName("{}sqliteuser.db"{});}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!db.open())}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()\ <<\ db.lastError().text();}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ qDebug()\ <<\ \textcolor{stringliteral}{"{}DB\ is\ open\(\backslash\)n"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{class_singleton_data_base_a70ad6024e606a734f35166c4ddc613d8}{SingletonDataBase}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\&\ )\ =\ \textcolor{keyword}{delete};\ }
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\&\ \mbox{\hyperlink{class_singleton_data_base_a9fc349235d915a0bbf9499c6328602b3}{operator\ =\ }}(\mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}\ \&)\ =\ \textcolor{keyword}{delete};\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_singleton_data_base_a7767ef8a662a0df4420d68ad244bccdc}{\string~SingletonDataBase}}()\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ db.close();}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_singleton_data_base_destroyer}{SingletonDataBaseDestroyer}};\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_singleton_data_base}{SingletonDataBase}}*\ \mbox{\hyperlink{class_singleton_data_base_a767b1ecc9d79121e8e2c25b847ce7911}{getInstance}}()\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!p\_instance)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ p\_instance\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_singleton_data_base_ad98f8e54620f7cd1399cf2f9d70f0a4f}{SingletonDataBase}}();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ destroyer.\mbox{\hyperlink{class_singleton_data_base_destroyer_a443519f287f0f4c3bc826ecf44b0f937}{initialize}}(p\_instance);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ p\_instance;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00089\ \ \ \ \ QString\ \mbox{\hyperlink{class_singleton_data_base_aa41fcb2d74b7dbd92a6c622453be6b56}{queryToDB}}(QString\ mystrquery)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ QSqlQuery\ query(db);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ query.exec(mystrquery);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ QSqlRecord\ rec\ =\ query.record();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ QString\ res\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ numofcols\ =\ rec.count();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(query.next())\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<numofcols;i++)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res.append(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}).append(query.value(i).toString());}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ res.append(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

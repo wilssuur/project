@@ -1,13 +1,11 @@
-/**
- * @file registrationwindow.h
- * @brief Contains registration functions for registration window
-*/
 #ifndef REGISTRATIONWINDOW_H
 #define REGISTRATIONWINDOW_H
 
 #include <QDialog>
 #include <QMessageBox>
 #include <QString>
+//#include "task.h"
+//#include "mainwindow.h"
 
 namespace Ui {
 class RegistrationWindow;
@@ -18,20 +16,20 @@ class RegistrationWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit RegistrationWindow(QWidget *parent = nullptr); /**< Constructor for RegistrationWindow class. */
-    ~RegistrationWindow(); /**< Destructor for RegistrationWindow class. */
+    explicit RegistrationWindow(QWidget *parent = nullptr);
+    ~RegistrationWindow();
 
 private slots:
-    void on_pushButtoncheckregistration_clicked(); /**< Slot for check registration button. */
-    void on_backButton_clicked(); /**< Slot for back button. */
-    void on_message_from_server_reg(QString msg); /**< Slot for message from server. */
+    void on_pushButtoncheckregistration_clicked();
 
+    void on_backButton_clicked();
+
+    void on_message_from_server_reg(QString msg);
 private:
-    Ui::RegistrationWindow *ui; /**< Pointer to the UI of the RegistrationWindow. */
-
+    Ui::RegistrationWindow *ui;
 signals:
-    void is_hide(); /**< Signal to hide RegistrationWindow. */
-    void is_reg(QString); /**< Signal for registration request. */
+    void is_hide();
+    void is_reg(QString);
 
 };
 
