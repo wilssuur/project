@@ -57,7 +57,7 @@ QByteArray parsing(QByteArray str)
         QStringList str_list = (QString(str)).split(" ");
         QString log = str_list.back();
         str_list.pop_back();
-        QByteArray res = QByteArray::number(2*int(task1(str_list[1],str_list[2]))-1);
+        QByteArray res = QByteArray::number(2*int(task_1(str_list[1],str_list[2]))-1);
         qDebug() << log << "   " << log.toStdString();
         qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
         SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
@@ -71,12 +71,25 @@ QByteArray parsing(QByteArray str)
         QStringList str_list = (QString(str)).split(" ");
         QString log = str_list.back();
         str_list.pop_back();
-        QByteArray res = QByteArray::number(2*int(task2(str_list[1],str_list[2]))-1);
+        QStringList task = (str_list[1]).split("+");
+
+        std::string t = task[0].toStdString();
+        std::string e = task[1].toStdString();
+
+        int answer = task_2(QString::fromStdString(t), QString::fromStdString(e));
+        int a = (str_list[2]).toInt();
+        QByteArray res;
+        if (answer == a) {
+            res = QByteArray::number(2*int(true)-1);
+        }
+        else {
+            res = QByteArray::number(2*int(false)-1);
+        }
         //qDebug() << log << "   " << log.toStdString();
         qDebug() << str_list[0] << " " << str_list[1];
         qDebug() << "UPDATE users SET task_2 = task_2 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
         SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_2 = task_2 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
-
+        TestTask2();
         return "check " + res;
     }
 
@@ -86,7 +99,7 @@ QByteArray parsing(QByteArray str)
         QStringList str_list = (QString(str)).split(" ");
         QString log = str_list.back();
         str_list.pop_back();
-        QByteArray res = QByteArray::number(2*int(task3(str_list[1],str_list[2]))-1);
+        QByteArray res = QByteArray::number(2*int(task_3(str_list[1],str_list[2]))-1);
         qDebug() << log << "   " << log.toStdString();
         qDebug() << "UPDATE users SET task_3 = task_3 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
         SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_3 = task_3 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
@@ -123,8 +136,7 @@ QByteArray reg(std::string sname, std::string name, std::string lname, std::stri
         "INSERT INTO "
         "users(note_id,user_socket,user_login,user_password,user_email,user_surname,user_name,user_patronymic,user_group,task_1,task_2,task_3)"
         "VALUES"
-        "("+note_id+",0,'"+log+"','"+pas+"','"+email+"','"+sname+"','"+name+"','"+lname+"','"+group+"',0,0,0);"
-                                                                       ));
+        "("+note_id+",0,'"+log+"','"+pas+"','"+email+"','"+sname+"','"+name+"','"+lname+"','"+group+"',0,0,0);"));
 
     QString res = SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("SELECT * FROM users where user_login = '"+log+"';"));
     qDebug()<<"Registration completed"<<res;
@@ -156,7 +168,7 @@ QByteArray showstat(std::string login)
 
 
 
-bool task1(QString task, QString user_answer)
+bool task_1(QString task, QString user_answer)
 {
     qDebug() << " task " << task << "answer" << user_answer;
     QStringList str_list = (QString(task)).split("+");
@@ -167,7 +179,7 @@ bool task1(QString task, QString user_answer)
 }
 
 
-bool task3(QString task, QString user_answer)
+bool task_3(QString task, QString user_answer)
 {
     qDebug() << " task " << task << "answer" << user_answer;
     QStringList str_list = (QString(task)).split("+");
@@ -180,24 +192,21 @@ bool task3(QString task, QString user_answer)
 
 
 
-
-
-bool task2(QString task, QString user_answer)
+int task_2(QString tops, QString edges)
 {
-    qDebug() << " task " << task << "answer" << user_answer;
-    QStringList str_list = (QString(task)).split("+");
+    /*qDebug() << " task " << task;
+    QStringList str_list = (task).split("+");
     std::string tops = str_list[0].toStdString();
-    std::string edges = str_list[1].toStdString();
+    std::string edges = str_list[1].toStdString();*/
 
     edges.erase(std::prev(edges.end()));
 
-
-    QStringList one_edge = ((QString::fromStdString(edges).remove(0, 1))).split("),(");
+    QStringList one_edge = ((edges.remove(0, 1))).split("),(");
     int k = one_edge.size();
     qDebug() << "one_edge"<< k;
 
 
-    int size = QString::fromStdString(tops).toInt();
+    int size = tops.toInt();
     int s = size + 1;
     int matrix[size+1][size+1];
     for (int i = 0; i <= s; i ++){
@@ -237,10 +246,10 @@ bool task2(QString task, QString user_answer)
         v[i] = 1;
     }
     d[begin_index] = 0;
-
     do {
         minindex = 10000;
         min = 10000;
+
         for (int i = 0; i < s; i++)
         { // Если вершину ещё не обошли и вес меньше min
             if ((v[i] == 1) and (d[i] < min))
@@ -267,12 +276,37 @@ bool task2(QString task, QString user_answer)
             v[minindex] = 0;
         }
     } while (minindex < 10000);
+
     qDebug() << d[s-1] << "result";
     int server_result = d[s-1];
-    int user_result = user_answer.toInt();
-    if (server_result == user_result)
-        return true;
-    else return false;
+
+    return server_result;
 }
+
+void TestTask2() {
+
+    assert(task_2("3", "(1,2,6),(2,3,2)") == 8);
+    assert(task_2("4", "(1,3,7),(1,2,3),(2,3,1),(2,4,9),(3,4,2)") == 6);
+    assert(task_2("4", "(1,3,1),(1,4,9),(2,3,1),(2,4,1),(3,4,8)") == 3);
+    assert(task_2("5", "(1,2,1),(1,3,9),(1,5,1),(2,3,1),(2,4,8),(2,5,1),(3,4,8),(4,5,5)") == 1);
+    qDebug() << "TestTask2 OK";
+
+}
+
+void TestTask1() {
+
+    assert(task_1("", "") == 0);
+    qDebug() << "TestTask1 OK";
+
+}
+
+void TestTask3() {
+
+    assert(task_1("", "") == 0);
+    qDebug() << "TestTask3 OK";
+
+}
+
+
 
 

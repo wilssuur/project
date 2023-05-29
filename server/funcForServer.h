@@ -50,21 +50,21 @@ QByteArray showstat(std::string login);
  * @param variant Variant for task 1
  * @return Result of checking the answer as a QByteArray
  */
-bool task1(QString task, QString user_answer);
+bool task_1(QString task, QString user_answer);
 
 /**
  * @brief Checks the answer for task 2 and returns the result as a QByteArray
  * @param answer User answer
  * @return Result of checking the answer as a QByteArray
  */
-bool task2(QString task, QString user_answer);
+int task_2(QString tops, QString edges);
 
 /**
  * @brief Checks the answer for task 3 and returns the result as a QByteArray
  * @param answer User answer
  * @return Result of checking the answer as a QByteArray
  */
-bool task3(QString task, QString user_answer);
+bool task_3(QString task, QString user_answer);
 
 /**
  * @brief Checks the user's answer for a task and returns the result as a QByteArray
@@ -75,6 +75,9 @@ bool task3(QString task, QString user_answer);
  */
 QByteArray check(std::string task, std::string variant, std::string answer);
 
+void TestTask1();
+void TestTask2();
+void TestTask3();
 
 
 #endif // FUNCFORSERVER_H
