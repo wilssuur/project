@@ -8,7 +8,7 @@ QString get_variant1(){
     QString edges = "";
 
     //генерация количества вершин
-    int count_tops = rand() % 5 + 4;
+    int count_tops = rand() % 4 + 5;
     QString c = QString::number(count_tops);
 
     //генерация ребер
@@ -21,9 +21,7 @@ QString get_variant1(){
         for (int j = 1; j <= count_edges_with_i; j++){
             int i_use = i + 1;
             int r = count_tops - i_use + 1;
-
             int n = i_use + (rand() % r);
-
             QString end = QString::number(n);
             if (not check.contains(end, Qt::CaseInsensitive)) {
                 check = check + end;
@@ -32,8 +30,6 @@ QString get_variant1(){
             }
         }
     }
-
-
     return  c + "+" + edges;
 }
 
@@ -45,7 +41,7 @@ QString get_variant2(){
 
 
     //генерация количества вершин
-    int count_tops = rand() % 4 + 4;
+    int count_tops = rand() % 4 + 5;
     QString c = QString::number(count_tops);
     //генерация ребер
 

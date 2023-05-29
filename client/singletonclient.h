@@ -40,6 +40,7 @@ signals:
     void msg_from_server_reg(QString msg);
     void msg_from_server_stat(QString msg);
     void msg_from_server_task(QString msg);
+    void msg_from_server_answer(QString msg);
 private slots:
     void slotServerRead();
 

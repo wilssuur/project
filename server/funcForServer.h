@@ -75,10 +75,6 @@ bool task3(QString task, QString user_answer);
  */
 QByteArray check(std::string task, std::string variant, std::string answer);
 
-/**
- * @brief Logs out the user and returns the result as a QByteArray
- * @return Result of logout as a QByteArray
- */
-QByteArray exit();
+
 
 #endif // FUNCFORSERVER_H

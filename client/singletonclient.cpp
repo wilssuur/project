@@ -3,6 +3,7 @@
 SingletonClient::SingletonClient(QObject *parent) : QObject(parent){
     mTcpSocket = new QTcpSocket(this);
     mTcpSocket -> connectToHost("192.168.50.83", 33333);
+    //mTcpSocket -> connectToHost("172.20.10.2", 33333);
     connect(mTcpSocket, &QTcpSocket::readyRead,
             this, &SingletonClient::slotServerRead);
 
@@ -39,6 +40,8 @@ void SingletonClient::slotServerRead(){
         emit msg_from_server_task(msg);}
     if(msg.left(4) == "stat")
         emit msg_from_server_stat(msg);
+    if(msg.left(5) == "check")
+        emit msg_from_server_answer(msg);
    // if(msg.left(4) == "task")
      //   emit msg_from_server_task(msg);
 

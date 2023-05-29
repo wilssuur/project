@@ -1,6 +1,7 @@
 #include "funcForServer.h"
 #include <QString>
 #include <QDebug>
+#include <iostream>
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
@@ -73,8 +74,8 @@ QByteArray parsing(QByteArray str)
         QByteArray res = QByteArray::number(2*int(task2(str_list[1],str_list[2]))-1);
         //qDebug() << log << "   " << log.toStdString();
         qDebug() << str_list[0] << " " << str_list[1];
-        qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
-        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
+        qDebug() << "UPDATE users SET task_2 = task_2 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
+        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_2 = task_2 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
 
         return "check " + res;
     }
@@ -87,15 +88,13 @@ QByteArray parsing(QByteArray str)
         str_list.pop_back();
         QByteArray res = QByteArray::number(2*int(task3(str_list[1],str_list[2]))-1);
         qDebug() << log << "   " << log.toStdString();
-        qDebug() << "UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
-        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_1 = task_1 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
+        qDebug() << "UPDATE users SET task_3 = task_3 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'";
+        SingletonDataBase::getInstance()->queryToDB(QString::fromStdString("UPDATE users SET task_3 = task_3 + ("+res.toStdString()+") WHERE user_login = '"+log.toStdString()+"'"));
 
         return "check " + res;
     }
 
-    else if (mystr == "Exit") {
-        return exit();
-    }
+
     return "";
 }
 
@@ -180,44 +179,100 @@ bool task3(QString task, QString user_answer)
 
 
 
-QByteArray exit()
-{
 
-    //return QString::fromStdString((std::string)"Goodbye!" + "\r\n").toUtf8();
-    return "exit\r\n";
-
-}
 
 
 bool task2(QString task, QString user_answer)
 {
     qDebug() << " task " << task << "answer" << user_answer;
     QStringList str_list = (QString(task)).split("+");
-    std::string size = str_list[0].toStdString();
+    std::string tops = str_list[0].toStdString();
     std::string edges = str_list[1].toStdString();
 
-    /*std::string qwe = str_list[1].toStdString();
-    qDebug() << qwe;
-    QStringList str_list2 = (QString::fromStdString(qwe)).split(").");
-    qDebug() << str_list2[0];
-    std::string edges = str_list[0].toStdString();
+    edges.erase(std::prev(edges.end()));
 
 
-    QStringList one_edge = (QString::fromStdString(edges)).split("),(");
+    QStringList one_edge = ((QString::fromStdString(edges).remove(0, 1))).split("),(");
+    int k = one_edge.size();
+    qDebug() << "one_edge"<< k;
 
-    qDebug() << "++++" << one_edge[0].toStdString() << " " << one_edge[1].toStdString();*/
 
-    /*int size = tops.toInt();
-    int matrix[size][size];
-    for (int i = 0; i <= size; i ++){
-        for (int j = 0; i <= size; j ++)
-        matrix[i][j] = 0;
-    }*/
-    return true;
+    int size = QString::fromStdString(tops).toInt();
+    int s = size + 1;
+    int matrix[size+1][size+1];
+    for (int i = 0; i <= s; i ++){
+        for (int j = 0; j <= s; j ++){
+            matrix[i][j] = 0;
+            matrix[j][i] = 0;
+        }
+    }
+
+    qDebug() << size << "end";
+    for (int i = 0; i < k; i ++){
+        QStringList list = (QString(one_edge[i])).split(",");
+        std::string edge1 = list[0].toStdString();
+        std::string edge2 = list[1].toStdString();
+        std::string weight = list[2].toStdString();
+        int e1  = QString::fromStdString(edge1).toInt();
+        int e2 = QString::fromStdString(edge2).toInt();
+        int w = QString::fromStdString(weight).toInt();
+        qDebug() << e1 << " " << e2 <<".";
+        matrix[e1][e2] = w;
+        matrix[e2][e1] = w;
+    }
+    for (int i = 0; i <= s; i++)
+    {
+        for (int j = 0; j < s; j++)
+            qDebug() << matrix[i][j];
+        qDebug() << " ";
+    }
+    int d[size+1]; // минимальное расстояние
+    int v[size+1]; // посещенные вершины
+    int begin_index = 1;
+    int temp, minindex, min;
+    //Инициализация вершин и расстояний
+    for (int i = 0; i < s; i++)
+    {
+        d[i] = 10000;
+        v[i] = 1;
+    }
+    d[begin_index] = 0;
+
+    do {
+        minindex = 10000;
+        min = 10000;
+        for (int i = 0; i < s; i++)
+        { // Если вершину ещё не обошли и вес меньше min
+            if ((v[i] == 1) and (d[i] < min))
+            {
+                min = d[i];
+                minindex = i;
+            }
+        }
+
+        if (minindex != 10000)
+        {
+            for (int i = 1; i < s; i++)
+            {
+                if (matrix[minindex][i] > 0)
+                {
+                    temp = min + matrix[minindex][i];
+                    if (temp < d[i])
+                    {
+                        qDebug() << temp << " " << d[i];
+                        d[i] = temp;
+                    }
+                }
+            }
+            v[minindex] = 0;
+        }
+    } while (minindex < 10000);
+    qDebug() << d[s-1] << "result";
+    int server_result = d[s-1];
+    int user_result = user_answer.toInt();
+    if (server_result == user_result)
+        return true;
+    else return false;
 }
 
-    /*QString server_answer;
-    if (server_answer == user_answer)
-        return true;
-    else return false;*/
 
