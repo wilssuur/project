@@ -20,6 +20,14 @@ task::~task()
 
 void task::on_leavaccountButton_clicked()
 {
+    ui->answerEdit->setText("");
+    ui->labeltask->setText("");
+    ui->labelresult->setText("");
+    ui->labeltask->setText("");
+    ui->labeltops->setText("");
+    ui->labeledges->setText("");
+    ui->labele->setText("");
+    ui->labelcount->setText("");
     this->close();
     emit is_hide();
 }
@@ -76,7 +84,7 @@ void task::on_message_from_server_answer(QString msg){
     QStringList str_list = (QString(msg)).split(" ");
     std::string answer = str_list[1].toStdString();
     if (answer == "-1" )
-        ui->labelresult->setText(QString::fromStdString("Неверно.."));
+        ui->labelresult->setText(QString::fromStdString("Неверно."));
     else
         ui->labelresult->setText(QString::fromStdString("Верно! Молодец!"));
 

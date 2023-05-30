@@ -39,10 +39,21 @@ void MainWindow::slot_auth(QString msg)
 
 void MainWindow::on_EnterButton_clicked()
 {
-    QString login = ui->lineEditlogin->text();
-    QString password = ui->lineEditpassword->text();
+    if (ui->lineEditpassword->text() == "")
+    {
+        QMessageBox::warning(this, "Неуспешно", "Введите пароль");
 
-    SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+    }
+    else if (ui->lineEditlogin->text() == "")
+    {
+        QMessageBox::warning(this, "Неуспешно", "Введите логин");
+
+    }
+    else {
+        QString login = ui->lineEditlogin->text();
+        QString password = ui->lineEditpassword->text();
+        SingletonClient::getInstance()->send_msg_to_server("Auth "+login+" "+password);
+    }
 
 }
 
@@ -59,8 +70,8 @@ void MainWindow::on_message_from_server_auth(QString msg)
 
     }
     else if (msg.left(5) == "auth-"){
-        QMessageBox::warning(this, "Неуспешно", "Неверный логин или пароль");
+        QMessageBox::information(this, "Неуспешно", "Неверный логин или пароль");}
 
-    }
+
 
 }

@@ -203,7 +203,7 @@ int task_2(QString tops, QString edges)
 
     QStringList one_edge = ((edges.remove(0, 1))).split("),(");
     int k = one_edge.size();
-    qDebug() << "one_edge"<< k;
+    //qDebug() << "one_edge"<< k;
 
 
     int size = tops.toInt();
@@ -216,7 +216,7 @@ int task_2(QString tops, QString edges)
         }
     }
 
-    qDebug() << size << "end";
+    //qDebug() << size << "end";
     for (int i = 0; i < k; i ++){
         QStringList list = (QString(one_edge[i])).split(",");
         std::string edge1 = list[0].toStdString();
@@ -225,16 +225,16 @@ int task_2(QString tops, QString edges)
         int e1  = QString::fromStdString(edge1).toInt();
         int e2 = QString::fromStdString(edge2).toInt();
         int w = QString::fromStdString(weight).toInt();
-        qDebug() << e1 << " " << e2 <<".";
+        //qDebug() << e1 << " " << e2;
         matrix[e1][e2] = w;
         matrix[e2][e1] = w;
     }
-    for (int i = 0; i <= s; i++)
+    /*for (int i = 0; i <= s; i++)
     {
         for (int j = 0; j < s; j++)
             qDebug() << matrix[i][j];
         qDebug() << " ";
-    }
+    }*/
     int d[size+1]; // минимальное расстояние
     int v[size+1]; // посещенные вершины
     int begin_index = 1;
@@ -268,7 +268,7 @@ int task_2(QString tops, QString edges)
                     temp = min + matrix[minindex][i];
                     if (temp < d[i])
                     {
-                        qDebug() << temp << " " << d[i];
+                        //qDebug() << temp << " " << d[i];
                         d[i] = temp;
                     }
                 }
@@ -277,8 +277,9 @@ int task_2(QString tops, QString edges)
         }
     } while (minindex < 10000);
 
-    qDebug() << d[s-1] << "result";
+
     int server_result = d[s-1];
+    qDebug() << server_result << "result";
 
     return server_result;
 }
