@@ -6,6 +6,7 @@
 #define FUNCFORSERVER_H
 
 #include <QByteArray>
+#include <stack>
 #include <string>
 #include "DateBase.h" /**< Header file for database operations */
 
@@ -64,7 +65,7 @@ int task_2(QString tops, QString edges);
  * @param answer User answer
  * @return Result of checking the answer as a QByteArray
  */
-bool task_3(QString task, QString user_answer);
+QString task_3(QString tops, QString edges);
 
 /**
  * @brief Checks the user's answer for a task and returns the result as a QByteArray
@@ -78,6 +79,5 @@ QByteArray check(std::string task, std::string variant, std::string answer);
 void TestTask1();
 void TestTask2();
 void TestTask3();
-
 
 #endif // FUNCFORSERVER_H

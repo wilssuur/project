@@ -52,7 +52,7 @@ protected:
      */
     SingletonDataBase() {
         qDebug() << "SingletonDataBase()\n";
-        db.setDatabaseName("D:/matlogic/draft/project/server/sqliteuser.db"); // Set database name
+        db.setDatabaseName("../server/sqliteuser.db"); // Set database name
         //db.setDatabaseName("sqliteuser.db");
 
         if(!db.open())
