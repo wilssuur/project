@@ -20,14 +20,6 @@ task::~task()
 
 void task::on_leavaccountButton_clicked()
 {
-    ui->answerEdit->setText("");
-    ui->labeltask->setText("");
-    ui->labelresult->setText("");
-    ui->labeltask->setText("");
-    ui->labeltops->setText("");
-    ui->labeledges->setText("");
-    ui->labele->setText("");
-    ui->labelcount->setText("");
     this->close();
     emit is_hide();
 }
@@ -46,7 +38,7 @@ void task::on_VariantButton_clicked()
     }
     else if (ui->radioButton_3->isChecked()){
         task = get_variant1();
-        ui->labeltask->setText("Задача 3.");
+        ui->labeltask->setText("Задача 3. Найти в связном неориентированном графе \r\n любой Эйлеров цикл.\r\n Если граф не является эйлеровым, введите -1");
     }
     else{
         QMessageBox::warning(this,"Ошибка", "Выберите номер задачи!");
@@ -63,13 +55,18 @@ void task::on_VariantButton_clicked()
     QString tops = "V = {";
     for (int i = 1; i <= x; i++){
         QString s = QString::number(i);
-        tops = tops + s + ", ";
+        if (i == x){
+            tops = tops + s;
+        }
+        else
+            tops = tops + s + ", ";
     }
     //((std::string)tops).erase(std::prev(t.end()));
     e.erase(std::prev(e.end()));
-    tops.erase(std::prev(tops.end()));
-    tops.erase(std::prev(tops.end()));
+    //tops.remove(-2,-1);
+   // tops.erase(std::prev(tops.end()));
     tops = tops  + "}";
+    qDebug()<<"tops = "<<tops;
 
     ui->labeltops->setText(tops);
     ui->labeledges->setText(QString::fromStdString(e));
@@ -84,7 +81,7 @@ void task::on_message_from_server_answer(QString msg){
     QStringList str_list = (QString(msg)).split(" ");
     std::string answer = str_list[1].toStdString();
     if (answer == "-1" )
-        ui->labelresult->setText(QString::fromStdString("Неверно."));
+        ui->labelresult->setText(QString::fromStdString("Неверно.."));
     else
         ui->labelresult->setText(QString::fromStdString("Верно! Молодец!"));
 
