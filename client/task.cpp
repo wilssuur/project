@@ -38,7 +38,7 @@ void task::on_VariantButton_clicked()
     }
     else if (ui->radioButton_3->isChecked()){
         task = get_variant1();
-        ui->labeltask->setText("Задача 3. Найти в связном неориентированном графе \r\n любой Эйлеров цикл.\r\n Если граф не является эйлеровым, введите -1");
+        ui->labeltask->setText("Задача 3. Найти в связном неориентированном графе \r\n Эйлеров цикл.\r\n Формат ввода: 1,2,3,4,5 \r\n Если граф не является эйлеровым, введите -1");
     }
     else{
         QMessageBox::warning(this,"Ошибка", "Выберите номер задачи!");
