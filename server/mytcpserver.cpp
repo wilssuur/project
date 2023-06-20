@@ -51,12 +51,17 @@ void MyTcpServer::slotServerRead(){
         array = curr_mTcpSocket->readAll();
         mystr = array.trimmed().toStdString();
     }
+    qDebug()<<"Recieve:"<<QString::fromStdString(mystr);
+    array.clear();
+    array.append(mystr);
     if (mystr == "stop") {
         curr_mTcpSocket->write("Goodbye!");
         slotClientDisconnected();
     }
     else {
-        curr_mTcpSocket->write(parsing(array));
+        QByteArray res = parsing(array);
+        qDebug()<<"Send"<<res;
+        curr_mTcpSocket->write(res);
     }
 }
 void MyTcpServer::slotClientDisconnected(){
