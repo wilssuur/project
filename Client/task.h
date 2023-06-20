@@ -35,6 +35,8 @@ private slots:
     void on_checkansButton_clicked();
 
     void on_againButton_clicked();
+    void on_message_from_server_task(QString msg);
+    void on_message_from_server_answer(QString msg);
 
 private:
     Ui::task *ui;
@@ -44,4 +46,7 @@ signals:
     void is_hide();
 };
 
+//void setLabel(const QString& x);
+
 #endif // TASK_H
+

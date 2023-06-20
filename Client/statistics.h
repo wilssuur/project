@@ -15,6 +15,8 @@ public:
     explicit statistics(QWidget *parent = nullptr);
     ~statistics();
 
+private slots:
+    void on_message_from_server_stat(QString msg);
 private:
     Ui::statistics *ui;
 };

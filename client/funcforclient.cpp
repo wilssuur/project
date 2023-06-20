@@ -8,7 +8,7 @@ QString get_variant1(){
     QString edges = "";
 
     //генерация количества вершин
-    int count_tops = rand() % 4 + 5;
+    int count_tops = rand() % 2 + 5;
     QString c = QString::number(count_tops);
 
     //генерация ребер
